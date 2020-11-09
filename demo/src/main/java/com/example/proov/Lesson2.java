@@ -36,7 +36,12 @@ public class Lesson2 {
         return Lesson2.exercise5(nr1, nr2);
     }
 
-    @GetMapping("ex6")
+    //@GetMapping("ex6")
+
+    @GetMapping("ex7")
+    public BigDecimal ex7(){
+        return Lesson2.exercise7();
+    }
 
 
     public static int[] exercise1(int nr){
@@ -123,7 +128,6 @@ public class Lesson2 {
         // https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=36
         int m = a;
         int n = b;
-
         int counterM = 1;
         int counterN = 1;
         System.out.print(counterM + " ");
@@ -138,27 +142,15 @@ public class Lesson2 {
                 counterM++;
                 if (m % 2 != 0){
                     m = 3*m+1;
-                    //System.out.println("counterM " + counterM);
-                    //System.out.println(m);
-                    //System.out.println();
                 }else {
                     m = m / 2;
-                    //System.out.println("counterM " + counterM);
-                    //System.out.println(m);
-                    //System.out.println();
                 }
             }
             counterN++;
             if (n % 2 != 0){
                 n = 3*n+1;
-                //System.out.println("counterN " + counterN);
-                //System.out.println(n);
-                //System.out.println();
             }else{
                 n = n/2;
-                //System.out.println("counterN " + counterN);
-                //System.out.println(n);
-                //System.out.println();
             }
         }
         if (counterM > counterN){
@@ -239,15 +231,18 @@ public class Lesson2 {
 //}
     }
 
-    public static void exercise7() {
+    public static BigDecimal exercise7() {
         // TODO arvuta kasutades BigDecimali 1.89 * ((394486820340 / 15 ) - 4 )
         BigDecimal a = new BigDecimal("1.89");
         BigDecimal b = new BigDecimal("394486820345");
         BigDecimal c = new BigDecimal("15");
         BigDecimal d = new BigDecimal("4");
-
-
-        System.out.println(b.divide(c, 4, RoundingMode.HALF_UP));
+        //System.out.println(b.divide(c, 4, RoundingMode.HALF_UP));
+        BigDecimal y = b.divide(c, 1, RoundingMode.HALF_UP);    //tagastab 4 koma kohta
+        y = y.subtract(d);
+        //return y;
+        y = y.multiply(a);
+        return y;
     }
 
     public static void exercise8() {
