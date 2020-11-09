@@ -112,7 +112,7 @@ public class TestController {
         return empList;
     }
 
-    @GetMapping("isikud/{id}")  //ühe lisitis oleva töötaja Get indeksi (0, 1, 2...) alusel
+    @GetMapping("isikud/{id}")  //ühe listis oleva töötaja Get indeksi (0, 1, 2...) alusel
     public TestKlass getWorker(@PathVariable("id") int id) {    //tagastab objekti
         //empList.stream().filter(kes -> kes.getId().);
         return empList.get(id);
