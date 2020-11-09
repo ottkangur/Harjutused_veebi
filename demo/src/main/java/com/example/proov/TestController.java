@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//DAY 4
 @RestController     //
 public class TestController {
     /**
@@ -41,7 +41,7 @@ public class TestController {
 
     //  /?employeeId=8&somethingElse=tere
     @GetMapping("jdf")
-    public String url2(@RequestParam("employeeId") int x,
+    public String url2(@RequestParam("employeeId") int x,   //@RequestParam tuleb pärast küsimärki
                        @RequestParam("somethingElse") String a) {
         return Test.w(x, a);
     }
@@ -54,6 +54,17 @@ public class TestController {
                        @RequestParam("b") String b) {
         return Test.areng(y, a, b);
     }
+
+    @GetMapping("a/*/a/{a}/{b}/c")      //see on Path, request parameetrid lähevad Pathi järele, st pärast '?'
+    public void test(@PathVariable("a") String a,   //soovA     //pole vahet, mis järjekorras PathVariables ja PathParam sulgudes on
+                     @RequestParam("a") String aa,  //a=rock    //pole vahet mis järjekorras Request parameetreid sisestada
+                     @RequestParam("b") String bb,  //b=roll
+                     @PathVariable("b") String b){  //soovB
+        System.out.println();
+    }
+    // /test/a/    *    /a/ {a} / {b} /c
+    // /test/a/misiganes/a/soovA/soovB/c?a=rock&b=roll
+    //                                  ?b=roll&a=rock
 
 
     // DAY 5
@@ -97,7 +108,7 @@ public class TestController {
     }
 
     @GetMapping("isikud")       //kõigi listis olevate töötajate Get
-    public List<TestKlass> getworkers() {   //T´tagastab listi
+    public List<TestKlass> getworkers() {   //tagastab listi
         return empList;
     }
 
