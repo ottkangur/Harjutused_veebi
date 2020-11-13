@@ -48,10 +48,10 @@ public class Lesson2 {
         // TODO loo 10 elemendile täisarvude massiv
         // TODO loe sisse konsoolist 10 täisarvu
         // TODO trüki arvud välja vastupidises järiekorras
-        int[] a = new int[10];
-        int[] b = new int[10];
+        int[] a = new int[nr];
+        int[] b = new int[nr];
         System.out.println("Paku 10 arvu: ");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < nr; i++) {
             Scanner scanner = new Scanner(System.in);
             int line = scanner.nextInt();
             a[i] = line;
@@ -137,6 +137,7 @@ public class Lesson2 {
 //            System.out.println("STOP");
 //            return n;
 //        }
+
         while (n > 1 || m > 1){
             while (m > 1){
                 counterM++;
@@ -245,7 +246,7 @@ public class Lesson2 {
         return y;
     }
 
-    public static void exercise8() {
+    public static void exercise8() {    //kontrolleriga ei tee
         /*
         Failis nums.txt on üksteise all 150 60-kohalist numbrit.
         Kirjuta programm, mis loeks antud numbrid failist sisse ja liidaks need arvud kokku ning kuvaks ekraanil summa.
@@ -255,7 +256,7 @@ public class Lesson2 {
          */
     }
 
-    public static void exercise9() {
+    public static void exercise9() {    //kontrolleriga
         /* TODO
         Sama mis eelmises ülesandes aga ära kasuta BigInt ega BigDecimal klassi
          */

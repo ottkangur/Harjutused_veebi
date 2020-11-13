@@ -1,4 +1,4 @@
-package com.example.proov;
+package com.example.proov.controller;
 
 import org.springframework.web.bind.annotation.*;
 

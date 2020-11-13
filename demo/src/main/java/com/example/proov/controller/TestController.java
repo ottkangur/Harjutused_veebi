@@ -1,5 +1,9 @@
-package com.example.proov;
+package com.example.proov.controller;
 
+import com.example.proov.Lesson3;
+import com.example.proov.RongigaReisijad;
+import com.example.proov.Test;
+import com.example.proov.TestKlass;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

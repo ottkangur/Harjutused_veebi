@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet  author="authorName"  id="changelog-1.0">
+        <createTable tableName="customer">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints  nullable="false"  primaryKey="true"  unique="true"/>
+            </column>
+            <column name="name" type="text">
+            </column>
+            <column name="address" type="text">
+            </column>
+        </createTable>
+        <createTable  tableName="account">
+            <column  name="id"  type="bigint" autoIncrement="true">
+                <constraints  nullable="false"  primaryKey="true"  unique="false"/>
+            </column>
+            <column name="account_nr" type="text">
+            </column>
+            <column name="balance" type="numeric">
+            </column>
+            <column name="customer_id" type="bigint">
+                <constraints foreignKeyName="fk_account_customer"
+                             references="customer(id)"/>
+            </column>
+        </createTable>
+        <createTable  tableName="history">
+            <column  name="id"  type="bigint" autoIncrement="true">
+                <constraints  nullable="false"  primaryKey="true"/>
+            </column>
+            <column name="account_nr" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="bigint">
+                <constraints foreignKeyName="fk_history_customer"
+                             references="customer(id)"/>
+            </column>
+            <column name="amount" type="numeric">
+            </column>
+            <column name="balance" type="numeric">
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
