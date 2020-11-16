@@ -1,4 +1,4 @@
-package com.company;
+package com.example.proov;
 
 import java.util.Scanner;
 

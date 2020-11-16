@@ -8,6 +8,7 @@ class ProovApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

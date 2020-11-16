@@ -1,6 +1,6 @@
 package com.example.proov.service;
 
-import com.example.proov.Customer;
+import com.example.proov.classesWithFields.Customer;
 import com.example.proov.repo.CustomerRepository;
 import com.example.proov.repo.JointRepository;
 import com.example.proov.repo2.CustomerRepository2;

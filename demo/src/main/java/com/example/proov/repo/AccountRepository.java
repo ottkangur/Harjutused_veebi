@@ -1,7 +1,6 @@
 package com.example.proov.repo;
 
-import com.example.proov.Accounts;
-import com.example.proov.rowmappers.AccountsNrRowMapper;
+import com.example.proov.classesWithFields.Accounts;
 import com.example.proov.rowmappers.AccountsRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -17,12 +16,12 @@ public class AccountRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public void createAccount(String requestNr,
+    public void createAccount(String accountNr,
                               int requestCustomerId) {
         String sql = "INSERT INTO account (account_nr, balance,  customer_id) " +   //'+' tekib ise Enteriga
                 "VALUES (:x1, :x2, :x3)";                //koolon ütleb, et see on muutuja ja paneb ise jutumärgid
         Map<String, Object> paramMap = new HashMap<>();  //kui Mapi 2. kohal on Object, võib erinevaid tüüpi andmeid sisestada...
-        paramMap.put("x1", requestNr);                   //...nt x1 vs x2
+        paramMap.put("x1", accountNr);                   //...nt x1 vs x2
         paramMap.put("x2", BigDecimal.ZERO);
         paramMap.put("x3", requestCustomerId);
         namedParameterJdbcTemplate.update(sql, paramMap);

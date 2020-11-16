@@ -1,10 +1,8 @@
 package com.example.proov.rowmappers;
 
-import com.example.proov.Accounts;
-import com.example.proov.Joint;
+import com.example.proov.classesWithFields.Joint;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

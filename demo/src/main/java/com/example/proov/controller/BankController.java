@@ -1,6 +1,7 @@
 package com.example.proov.controller;
 
-import com.example.proov.*;
+import com.example.proov.classesWithFields.Accounts;
+import com.example.proov.classesWithFields.Customer;
 import com.example.proov.repo2.CustomerRepository2;
 import com.example.proov.service.AccountService;
 import com.example.proov.service.CustomerService;
@@ -36,6 +37,7 @@ public class BankController {
                               @RequestParam("requestCustomerId") int requestCustomerId) {
         accountService.createAccount(requestNr, requestCustomerId);
     }
+
 
     //getBalance (requestNr) SQL
     @GetMapping("account/{id}")
@@ -102,6 +104,10 @@ public class BankController {
         return customerService.selectRow(id);
     }
 
+    @GetMapping("account/test")
+    public String test(){
+        return "test";
+    }
 
 
     //boonus

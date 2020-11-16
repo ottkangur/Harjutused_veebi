@@ -1,6 +1,5 @@
 package com.example.proov.service;
 
-import com.example.proov.Accounts;
 import com.example.proov.repo.AccountRepository;
 import com.example.proov.repo.CustomerRepository;
 import com.example.proov.repo.HistoryRepository;

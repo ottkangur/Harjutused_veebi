@@ -1,7 +1,6 @@
 package com.example.proov.controller;
 
 import com.example.proov.Lesson3;
-import com.example.proov.RongigaReisijad;
 import com.example.proov.Test;
 import com.example.proov.TestKlass;
 import org.springframework.web.bind.annotation.*;
@@ -135,23 +134,23 @@ public class TestController {
         return empList;
     }
 
-    //harjutamine 8.11
-    List<RongigaReisijad> reisijad = new ArrayList<>();
-    // elron/reisijad/Tartu-Tallinn?kpv=20201108&kell=1723
-    @GetMapping("elron")
-    public List<RongigaReisijad> reisijad(){
-        return reisijad;
-    }
-
-    @PostMapping("elron")       //PostMappingut saab teha vaid Postmanis, brauseris mitte
-    public void postReisijad(@RequestBody RongigaReisijad arv) {
-        reisijad.add(arv);
-        //return reisijad;
-    }
-
-    @GetMapping("elron/{id}")
-    public RongigaReisijad getLog(@PathVariable("id") int id) {
-        return reisijad.get(id);
-    }
+//    //harjutamine 8.11
+//    List<RongigaReisijad> reisijad = new ArrayList<>();
+//    // elron/reisijad/Tartu-Tallinn?kpv=20201108&kell=1723
+//    @GetMapping("elron")
+//    public List<RongigaReisijad> reisijad(){
+//        return reisijad;
+//    }
+//
+//    @PostMapping("elron")       //PostMappingut saab teha vaid Postmanis, brauseris mitte
+//    public void postReisijad(@RequestBody RongigaReisijad arv) {
+//        reisijad.add(arv);
+//        //return reisijad;
+//    }
+//
+//    @GetMapping("elron/{id}")
+//    public RongigaReisijad getLog(@PathVariable("id") int id) {
+//        return reisijad.get(id);
+//    }
 
 }

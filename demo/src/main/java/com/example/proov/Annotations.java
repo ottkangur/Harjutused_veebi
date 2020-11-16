@@ -8,7 +8,7 @@ import java.util.List;
 @RestController
 public class Annotations {
 
-    List<RongigaReisijad> reisijad = new ArrayList<>();
+    //List<RongigaReisijad> reisijad = new ArrayList<>();
 
     //@PathVariable
     //URL: /path/2

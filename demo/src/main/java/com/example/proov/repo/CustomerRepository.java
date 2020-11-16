@@ -1,9 +1,7 @@
 package com.example.proov.repo;
 
-import com.example.proov.Customer;
-import com.example.proov.Joint;
+import com.example.proov.classesWithFields.Customer;
 import com.example.proov.rowmappers.CustomerRowMapper;
-import com.example.proov.rowmappers.JointRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.example.proov;
+package com.example.proov.classesWithFields;
 
 public class Customer {
     private String name;

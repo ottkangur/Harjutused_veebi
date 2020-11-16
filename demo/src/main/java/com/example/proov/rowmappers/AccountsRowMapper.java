@@ -1,6 +1,6 @@
 package com.example.proov.rowmappers;
 
-import com.example.proov.Accounts;
+import com.example.proov.classesWithFields.Accounts;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

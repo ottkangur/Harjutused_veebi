@@ -1,4 +1,4 @@
-package com.example.proov;
+package com.example.proov.classesWithFields;
 
 import java.math.BigDecimal;
 

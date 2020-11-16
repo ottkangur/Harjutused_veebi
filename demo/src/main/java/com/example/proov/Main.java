@@ -5,6 +5,10 @@ public class Main {
     //psvm -
 
     public static void main(String[] args) {
+        double g = 1;
+        double f = 1.00000000;
+        double h = g*f;
+        System.out.println(h);
         /**int a = 1;
         int b = 1;
         int c = 3;
