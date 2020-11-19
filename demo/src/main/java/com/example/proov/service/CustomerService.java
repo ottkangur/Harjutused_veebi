@@ -21,7 +21,6 @@ public class CustomerService {
 
     //boonus
 
-
     public void createCustomer(String requestName,
                                String requestAddress) {//need on vaikimisis @RequestParam
         customerRepository.createCustomer(requestName, requestAddress);
@@ -48,7 +47,7 @@ public class CustomerService {
     }
 
     public Customer selectRow(int id){
-        return customerRepository.selectRow(id);
+        return customerRepository.selectCustomer(id);
     }
 
     public List jointTables(){

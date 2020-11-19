@@ -1,11 +1,12 @@
 package com.example.proov.classesWithFields;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Accounts {
     private String accountNr;
     private BigDecimal balance;
-    private Long customerId;
+    private int customerId;
 
     public Accounts() {
     }
@@ -31,11 +32,11 @@ public class Accounts {
         this.balance = balance;
     }
 
-    public Long getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 }

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create account</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!--<form>-->
+<table align="center">
+    <h1 align="center">Welcome to our webpage</h1>
+    <h2 align="center">The best bank in the World</h2><br>
+    <tr>
+        <th>Name:</th>
+        <th><input></th>
+    </tr>
+    <tr>
+        <th>Address:</th>
+        <th><input></th>
+    </tr>
+    <tr>
+        <th>ID:</th>
+        <th><input></th>
+    </tr>
+    <tr>
+        <th>Sugu:</th>
+        <th>mees<input type="radio" name="sugu" value="mees"></th>
+        <th> naine<input type="radio" name="sugu" value="naine"></th>
+    </tr>
+    <tr>
+        <th></th>
+        <th><input></th>
+    </tr>
+    <tr>
+        <th></th>
+        <th><input></th>
+    </tr>
+    <tr>
+        <th>Username:</th>
+        <th><input id = "siia"></th>
+    </tr>
+    <tr>
+        <th>Password:</th>
+        <th><input id="pas" type="password"></th>
+    </tr>
+    <tr>
+        <th colspan="2"><input type="submit" name="create account" value="create account"></th>
+    </tr>
+<!--    <tr>-->
+<!--        <th id="myButton" colspan="2"><input type="button" name="create account" value="Press me"></th>-->
+<!--    </tr>-->
+</table>
+</form>
+<br>
+
+<!---->
+
+<!--<button id="button">-->
+<!--</button>-->
+<button id="see">press me</button>
+<table id = "myTable"></table>
+<br>
+    <script>
+        // let element = document.getElementById("siia");
+        // element.value = "midagi";
+        //
+        // let element = document.getElementById("pas")
+        // let newElement = document.createElement("word")
+        // element.appendChild(newElement)
+        // newElement.innerHTML="New text"
+
+        let button = document.getElementById("see")
+        button.onclick = function (){
+            // alert('test')
+            let myTable = document.getElementById("myTable")
+            let rowElement = document.createElement("tr")
+            let cellElement = document.createElement("td")
+            rowElement.append(cellElement)
+            cellElement.innerText="test"
+            myTable.append(rowElement)
+        }
+    </script>
+
+<!---->
+
+<button id="buttonid">Create table</button>
+<table id="tableid"></table>
+<input id="inputid" type="number">
+<script>
+    let myButton = document.getElementById("buttonid")
+    myButton.onclick = function (){
+        let myInput = document.getElementById("inputid").value;
+        // alert(myInput)
+        let rowElement = document.createElement("tr")
+        let myTable = document.getElementById("tableid")
+        for (let i = 1; i<=myInput; i++) {
+            let cellElement = document.createElement("td")
+            cellElement.innerText = i
+            rowElement.append(cellElement)
+        }
+        myTable.append(rowElement)
+    }
+</script>
+<br>
+
+<!---->
+
+<button id="multiplyid">Multiply</button>
+<table id="resultid"></table>
+<input id="iid" type="number">
+<input id="jid">
+<script>
+    let myButton2 = document.getElementById("multiplyid");
+    myButton2.onclick = function (){
+        let myInputA = document.getElementById("iid").value;
+        let myInputB = document.getElementById("jid").value;
+        let myTable = document.getElementById("resultid");
+        for (let i = 1; i<=myInputA; i++) {
+            let rowElement = document.createElement("tr");
+            for (let j = 1; j<=myInputB; j++){
+                let cellElement = document.createElement("td");
+                cellElement.innerText = i*j;
+                rowElement.append(cellElement);
+            }
+            myTable.append(rowElement);
+            // rowElement.append(cellElement);
+            // let rowElement = document.createElement("tr");
+        }
+    }
+</script>
+
+<!--<button onclick="alert ('Hello')" align="center">-->
+<!--    run some java script-->
+<!--</button>-->
+</body>
+</html>

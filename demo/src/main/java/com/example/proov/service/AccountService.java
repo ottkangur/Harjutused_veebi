@@ -3,8 +3,13 @@ package com.example.proov.service;
 import com.example.proov.classesWithFields.Accounts;
 import com.example.proov.erandid.ApplicationException;
 import com.example.proov.repo.AccountRepository;
+import com.example.proov.repo.CustomerRepository;
 import com.example.proov.repo.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,50 +23,44 @@ public class AccountService {
     private AccountRepository accountRepository;
     @Autowired
     private HistoryRepository historyRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public void createAccount(String accountNr,
                               int requestCustomerId) {
+        try {
+            customerRepository.selectCustomer(requestCustomerId);
+//        } catch (DataIntegrityViolationException e) {
+//            System.out.print("There is no customer with that id");
+        } catch (EmptyResultDataAccessException e){
+            throw new ApplicationException("There is no customer with that id");
+//            System.out.print("There is no customer with that id");
+        }
         List accountList = accountRepository.getAccountColumn();
         if (accountList.contains(accountNr)) {
-            throw new ApplicationException("Sellise numbriga konto on olemas.");
-        }else{
+            throw new ApplicationException("That account number already exists");
+        } else {
             accountRepository.createAccount(accountNr, requestCustomerId);
         }
-//        int c = 0;
-//        for (int i = 0; i < accountList.size(); i++) {
-//            if (accountList.get(i).equals(accountNr)){
-//                c++;
-//                break;
-//            }
-//        }
-//        if (c > 0){
-//            throw new ApplicationException("Sellise numbriga konto on olemas.");
-//        }else{
+//        else if (idList.contains(requestCustomerId)) {
 //            accountRepository.createAccount(accountNr, requestCustomerId);
 //        }
     }
 
-
-
-    public BigDecimal getBalance(String requestNr) {
-        if (accountRepository.getAccountColumn().contains(requestNr)) {
-            return accountRepository.getBalance(requestNr);
+    public void depositMoneySQL(String accountNr,
+                                BigDecimal amount) {
+        List accountList = accountRepository.getAccountColumn();
+        if (accountList.contains(accountNr)) {
+            accountRepository.updatedBalance(accountNr,
+                    accountRepository.getBalance(accountNr).add(amount));
+            historyRepository.createLog(accountRepository.getId(accountNr),
+                    accountNr,
+                    amount,
+                    accountRepository.getBalance(accountNr).add(amount));
         } else {
             throw new ApplicationException("Seda kontot pole olemas");
         }
-    }
-
-    public void depositMoneySQL(String accountNr,
-                                BigDecimal amount) {
-
-        List accountList = accountRepository.getAccountColumn();
-        if (accountList.contains(accountNr)) {
-            BigDecimal newBalance = accountRepository.getBalance(accountNr).add(amount);
-            accountRepository.updatedBalance(accountNr, newBalance);
-            historyRepository.createLog(accountRepository.getId(accountNr), accountNr, amount, newBalance);
-        }else {
-            throw new ApplicationException("Seda kontot pole olemas");
-        }
+        //PIKEM
 //        int c = 0;
 //        for (int i = 0; i < accountList.size(); i++) {
 //            if (accountList.get(i).equals(accountNr)) {
@@ -75,14 +74,22 @@ public class AccountService {
 //        if (c == 0) {
 //            throw new ApplicationException("Seda kontot pole olemas");
 //        }
-        //LÜHEM
-//
+    }
+
+    public void depositMoneyId(int id,
+                               BigDecimal amount) {
+        accountRepository.updatedBalance(accountRepository.getAccount(id).getAccountNr(),
+                accountRepository.getAccount(id).getBalance().add(amount));
+        historyRepository.createLog(accountRepository.getId(accountRepository.getAccount(id).getAccountNr()),
+                accountRepository.getAccount(id).getAccountNr(),
+                amount,
+                accountRepository.getAccount(id).getBalance().add(amount));
     }
 
     public void withdrawMoneySQL(String accountNr,
                                  BigDecimal amount) {
         if (accountRepository.getAccountColumn().contains(accountNr)) {
-            if (getBalance(accountNr).compareTo(amount) < 0) {
+            if (accountRepository.getBalance(accountNr).compareTo(amount) < 0) {
                 throw new ApplicationException("Kontol pole piisavalt raha!");
             } else {
                 BigDecimal newBalance = accountRepository.getBalance(accountNr).subtract(amount);
@@ -99,7 +106,7 @@ public class AccountService {
                                  String to,
                                  BigDecimal amount) {
         if (accountRepository.getAccountColumn().contains(from) && accountRepository.getAccountColumn().contains(to)) {
-            if (getBalance(from).compareTo(amount) < 0) {
+            if (accountRepository.getBalance(from).compareTo(amount) < 0) {
                 throw new ApplicationException("Kontol pole piisavalt raha!");
             } else {
                 BigDecimal fromBalance = accountRepository.getBalance(from).subtract(amount);
@@ -114,9 +121,7 @@ public class AccountService {
         }
     }
 
-    public List<Accounts> selectmultipleacc() {
-        return accountRepository.selectmultipleacc();
-    }
-
-//    public void getId()
+//    public List<Accounts> selectmultipleacc() {
+//        return accountRepository.selectmultipleacc();
+//    }
 }

@@ -1,7 +1,9 @@
 package com.example.proov.repo;
 
 import com.example.proov.classesWithFields.Accounts;
+import com.example.proov.classesWithFields.Customer;
 import com.example.proov.rowmappers.AccountsRowMapper;
+import com.example.proov.rowmappers.CustomerRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,16 @@ public class AccountRepository {
         paramMap.put("x2", BigDecimal.ZERO);
         paramMap.put("x3", requestCustomerId);
         namedParameterJdbcTemplate.update(sql, paramMap);
+    }
+
+    //tagastab listi
+    public Accounts getAccount(int id){      //Customer näitab, mis id järgi
+        String sql = "SELECT * FROM account WHERE customer_id = :id";   //SQL käsk/süntaks
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        Accounts oneAccount = namedParameterJdbcTemplate.queryForObject(
+                sql, paramMap, new AccountsRowMapper());
+        return oneAccount;
     }
 
     public BigDecimal getBalance(String accountNr) {

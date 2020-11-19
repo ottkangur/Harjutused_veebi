@@ -1,7 +1,7 @@
 package com.example.proov.controller;
 
-import com.example.proov.classesWithFields.Accounts;
 import com.example.proov.classesWithFields.Customer;
+import com.example.proov.repo.AccountRepository;
 import com.example.proov.repo2.CustomerRepository2;
 import com.example.proov.service.AccountService;
 import com.example.proov.service.CustomerService;
@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class BankController {
 
     @Autowired
@@ -23,11 +24,13 @@ public class BankController {
     private AccountService accountService;
     @Autowired
     private CustomerRepository2 customerRepository2;
+    @Autowired
+    private AccountRepository accountRepository;
 
     //createCustomer SQL (name, address)
     @PostMapping("customer")
     public void createCustomer(@RequestParam("requestName") String requestName,
-                               @RequestParam("requestAddress") String requestAddress){
+                               @RequestParam("requestAddress") String requestAddress) {
         customerService.createCustomer(requestName, requestAddress);
     }
 
@@ -38,11 +41,11 @@ public class BankController {
         accountService.createAccount(requestNr, requestCustomerId);
     }
 
-
     //getBalance (requestNr) SQL
-    @GetMapping("account/{id}")
-    public BigDecimal getBalance(@PathVariable("id") String requestNr) {
-        return accountService.getBalance(requestNr);
+    @CrossOrigin
+    @GetMapping("account/balance/{accountNr}")
+    public BigDecimal getBalance(@PathVariable("accountNr") String requestNr) {
+        return accountRepository.getBalance(requestNr);
     }
 
     //update SQL (updateName) SQL
@@ -55,7 +58,7 @@ public class BankController {
     //aadressi uuendamine
     @PutMapping("customer/address/{name}")
     public void updateAddress(@PathVariable("name") String requestName,
-                              @RequestParam("requestAddress") String requestAdress){
+                              @RequestParam("requestAddress") String requestAdress) {
         customerService.updateAddress(requestName, requestAdress);
     }
 
@@ -65,6 +68,12 @@ public class BankController {
                                 @RequestParam("requestAmount") BigDecimal amount) {
         accountService.depositMoneySQL(accountNr, amount);
     }
+
+//    @PutMapping("account/deposit/id")
+//    public void depositMoneyId(int requestId,
+//                   BigDecimal requestAmount){
+//        accountService.depositMoneyId(requestId, requestAmount);
+//    }
 
     //withrawMoney (requestNr, requestAmount) SQL
     @PutMapping("account/withdraw")
@@ -82,10 +91,10 @@ public class BankController {
     }
 
     //tagastab kõik account tabeli sisu
-    @GetMapping("selectmultipleaccounts")
-    public List<Accounts> selectmultipleacc() {
-        return accountService.selectmultipleacc();
-    }
+//    @GetMapping("selectmultipleaccounts")
+//    public List<Accounts> selectmultipleacc() {
+//        return accountService.selectmultipleacc();
+//    }
 
     //tagastab kogu customer tabeli sisu
     @GetMapping("selectmultiplecustomers")
@@ -93,19 +102,38 @@ public class BankController {
         return customerService.selectmultiplecus();
     }
 
+    //tagastab kogu account tabeli sisu
+    @GetMapping("accounts/all")
+    public List selectmultipleacc(){
+        return accountRepository.selectmultipleacc();
+    }
+
+    //tagastab ühendatud tabeli
     @GetMapping("jointtables")
-    public List getJointTable(){
+    public List getJointTable() {
         return customerService.jointTables();
     }
 
-    //tagastab ühe rea id järgi
+    //tagastab ühe Customer rea id järgi
     @GetMapping("selectrow")
-    public Customer selectRow(@RequestParam("id") int id){ //Customer näitab, mis klassiid järgi
+    public Customer selectCustomerRow(@RequestParam("id") int id) { //Customer näitab, mis id järgi
         return customerService.selectRow(id);
     }
 
+    //tagastab kliendi nime id alusel
+    @GetMapping("askName")
+    public String askName(@RequestParam("id") int id) {
+        return customerService.selectRow(id).getName();
+    }
+
+//    @GetMapping("askAccount")
+//    public List selectAccountRow(@RequestParam("id") int id) {    SELLISE LISTIGA POLE SUURT MIDAGI TEHA
+////        accountRepository.getAccount(id);
+//        return (List) accountRepository.getAccount(id).get(0);
+//    }
+
     @GetMapping("account/test")
-    public String test(){
+    public String test() {
         return "test";
     }
 

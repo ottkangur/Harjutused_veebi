@@ -51,7 +51,7 @@ public class CustomerRepository {
         return resultList;
     }
 
-    public Customer selectRow(int id){ //Customer näitab, mis klassiid järgi
+    public Customer selectCustomer(int id){
         String sql = "SELECT * FROM customer WHERE id = :id";   //SQL käsk/süntaks
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("id", id);
@@ -59,6 +59,4 @@ public class CustomerRepository {
                 sql, paramMap, new CustomerRowMapper());
         return single;
     }
-
-
 }

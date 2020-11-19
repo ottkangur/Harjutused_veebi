@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day13</title>
+</head>
+<body>
+
+<button id="buttonid">Fibo numbers</button>
+<table id="tableid" border="1"></table>
+<input id="inputid" type="number">
+<script>
+    //fibonacci
+    let myButton = document.getElementById("buttonid");
+    myButton.onclick = function () {
+        let myInput = document.getElementById("inputid").value;
+         // alert(myInput)
+        let myTable = document.getElementById("tableid");
+        let rowElement = document.createElement("tr");
+        let cellElement = document.createElement("td");
+        let cellElement2 = document.createElement("td");
+        let a = 0;
+        let b = 1;
+        let c = 0;
+        cellElement.innerText = a;
+        cellElement2.innerText = b;
+        if (myInput == 1) {
+            rowElement.append(cellElement);
+            myTable.append(rowElement);
+        } else if (myInput == 2) {
+            rowElement.append(cellElement,cellElement2);
+            myTable.append(rowElement);
+        } else {
+            rowElement.append(cellElement, cellElement2)
+            for (let i = 2; i < myInput; i++) {
+                c = a + b;
+                let cellElement = document.createElement("td");
+                cellElement.innerText = c;
+                rowElement.append(cellElement);
+                a = b;
+                b = c;
+                myTable.append(rowElement);
+            }
+        }
+    }
+
+</script>
+<br><br><br>
+
+<!---->
+
+<table id="myTable" border="1">
+    <tr>
+        <th colspan="3">Customer</th>
+    </tr>
+</table>
+<script>
+    //fetch ja promise
+    fetch("http://localhost:8080/selectmultiplecustomers").then(
+        function(result){    //kui a saab tagastuse (result), siis tehakse midagi, antud juhul function(result)
+            console.log(result)  //prindib F12 konsooli
+            return result.json();
+        }
+    ).then(function(result){
+            console.log(result)  //prindib F12 konsooli
+            let table = document.getElementById("myTable")
+            for(let i = 0; i < result.length; i++){
+                let row = document.createElement("tr");
+
+                let cell = document.createElement("td");
+                cell.innerText = result[i].id;
+                row.append(cell);
+
+                let cell1 = document.createElement("td");
+                cell1.innerText = result[i].name;
+                row.append(cell1);
+
+                let cell2 = document.createElement("td");
+                cell2.innerText = result[i].address;
+                row.append(cell2);
+
+                table.append(row);
+            }
+        }
+    )
+</script>
+
+<!---->
+
+<script>
+</script>
+
+</body>
+</html>
