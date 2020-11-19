@@ -15,13 +15,15 @@ public class CustomerRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public void createCustomer(String requestName,
-                               String requestAddress) {  //need on vaikimisis @RequestParam
+    public void createCustomer(Customer customer
+//                               String requestName,
+//                               String requestAddress
+                               ) {
         String sql = "INSERT INTO customer (name, address) " +   //'+' tekib ise Enteriga
                 "VALUES (:x1, :x2)";                //koolon ütleb, et see on muutuja ja paneb ise jutum'rgid
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("x1", requestName);
-        paramMap.put("x2", requestAddress);
+        paramMap.put("x1", customer.getName());
+        paramMap.put("x2", customer.getAddress());
         namedParameterJdbcTemplate.update(sql, paramMap);
     }
 

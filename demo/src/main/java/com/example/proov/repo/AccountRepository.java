@@ -18,14 +18,16 @@ public class AccountRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public void createAccount(String accountNr,
-                              int requestCustomerId) {
+    public void createAccount(Accounts accounts
+//            String accountNr,
+//                              int requestCustomerId
+                              ) {
         String sql = "INSERT INTO account (account_nr, balance,  customer_id) " +   //'+' tekib ise Enteriga
                 "VALUES (:x1, :x2, :x3)";                //koolon ütleb, et see on muutuja ja paneb ise jutumärgid
         Map<String, Object> paramMap = new HashMap<>();  //kui Mapi 2. kohal on Object, võib erinevaid tüüpi andmeid sisestada...
-        paramMap.put("x1", accountNr);                   //...nt x1 vs x2
+        paramMap.put("x1", accounts.getAccountNr());                   //...nt x1 vs x2
         paramMap.put("x2", BigDecimal.ZERO);
-        paramMap.put("x3", requestCustomerId);
+        paramMap.put("x3", accounts.getCustomerId());
         namedParameterJdbcTemplate.update(sql, paramMap);
     }
 

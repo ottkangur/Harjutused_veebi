@@ -1,6 +1,8 @@
 package com.example.proov.controller;
 
+import com.example.proov.classesWithFields.Accounts;
 import com.example.proov.classesWithFields.Customer;
+import com.example.proov.classesWithFields.User;
 import com.example.proov.repo.AccountRepository;
 import com.example.proov.repo2.CustomerRepository2;
 import com.example.proov.service.AccountService;
@@ -10,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,16 +32,22 @@ public class BankController {
 
     //createCustomer SQL (name, address)
     @PostMapping("customer")
-    public void createCustomer(@RequestParam("requestName") String requestName,
-                               @RequestParam("requestAddress") String requestAddress) {
-        customerService.createCustomer(requestName, requestAddress);
+    public List<Customer> createCustomer(
+//            @RequestParam("requestName") String requestName,
+//                                        @RequestParam("requestAddress") String requestAddress,
+                                         @RequestBody Customer customer) {
+        customerService.createCustomer(customer);
+        return customerService.selectmultiplecus();
     }
 
     //createAccount SQL (requestNr, requestBalance)
     @PostMapping("account")
-    public void createAccount(@RequestParam("requestNr") String requestNr,
-                              @RequestParam("requestCustomerId") int requestCustomerId) {
-        accountService.createAccount(requestNr, requestCustomerId);
+    public List<Accounts> createAccount(@RequestBody Accounts accounts
+//            @RequestParam("requestNr") String requestNr,
+//                              @RequestParam("requestCustomerId") int requestCustomerId
+    ) {
+        accountService.createAccount(accounts);
+        return accountRepository.selectmultipleacc();
     }
 
     //getBalance (requestNr) SQL
@@ -46,6 +55,11 @@ public class BankController {
     @GetMapping("account/balance/{accountNr}")
     public BigDecimal getBalance(@PathVariable("accountNr") String requestNr) {
         return accountRepository.getBalance(requestNr);
+    }
+
+    @GetMapping("account/id/{accountNr}")
+    public int getId(@PathVariable("accountNr") String accountNr){
+        return accountRepository.getId(accountNr);
     }
 
     //update SQL (updateName) SQL
@@ -95,6 +109,25 @@ public class BankController {
 //    public List<Accounts> selectmultipleacc() {
 //        return accountService.selectmultipleacc();
 //    }
+
+//    @GetMapping("register")
+//    public String register(String email){
+//        System.out.println(email);
+//        return "OK";
+//    }
+//    @PostMapping("register")
+//    public String register(){
+//        return "OK";
+//    }
+
+    @PostMapping("register")
+    public List<User> register(@RequestBody User user) {
+        System.out.println(user);
+        List<User> userList = new ArrayList<>();
+        userList.add(user);
+        userList.add(new User("first", "smith", 23, "john@com"));
+        return userList;
+    }
 
     //tagastab kogu customer tabeli sisu
     @GetMapping("selectmultiplecustomers")

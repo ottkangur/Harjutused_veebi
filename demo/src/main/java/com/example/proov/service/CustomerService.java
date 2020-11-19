@@ -21,9 +21,12 @@ public class CustomerService {
 
     //boonus
 
-    public void createCustomer(String requestName,
-                               String requestAddress) {//need on vaikimisis @RequestParam
-        customerRepository.createCustomer(requestName, requestAddress);
+    public void createCustomer(Customer customer
+//                               String requestName,
+//                               String requestAddress
+                               ){//need on vaikimisis @RequestParam
+        customerRepository.createCustomer(customer);
+//        customerRepository.createCustomer(requestName, requestAddress);
 //        String sql = "INSERT INTO customer (name, address) " +   //'+' tekib ise Enteriga
 //                "VALUES (:x1, :x2)";                //koolon ütleb, et see on muutuja ja paneb ise jutum'rgid
 //        Map<String, String> paramMap = new HashMap<>();

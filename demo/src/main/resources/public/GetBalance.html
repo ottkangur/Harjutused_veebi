@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get balance</title>
+</head>
+<body>
+
+Account number:
+<input id="in1" type="text"><br>
+
+<button id="but1">Send query</button>
+<br><br>
+
+Account balance:
+<p id="accountBalance"></p>
+Customer ID:
+<p id="customerId"></p>
+
+<script>
+    let myButton = document.getElementById("but1");
+    let accountNr = document.getElementById("in1");
+    myButton.onclick = function () {
+        fetch('http://localhost:8080/account/balance/' + accountNr.value
+        ).then(
+            function (result) {
+                console.log(result)
+                return result.text();
+            }
+        ).then(
+            function (result) {
+                document.getElementById("accountBalance").innerText = result;
+            }
+        )
+        fetch('http://localhost:8080/account/id/' + accountNr.value
+        ).then(
+            function (result2) {
+                console.log(result2)
+                return result2.text();
+            }
+        ).then(
+            function (result2){
+                document.getElementById("customerId").innerText = result2;
+            }
+        )
+    }
+</script>
+<br><br><br>
+
+<script>
+
+</script>
+</body>
+</html>

@@ -26,10 +26,9 @@ public class AccountService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public void createAccount(String accountNr,
-                              int requestCustomerId) {
+    public void createAccount(Accounts accounts) {
         try {
-            customerRepository.selectCustomer(requestCustomerId);
+            customerRepository.selectCustomer(accounts.getCustomerId());
 //        } catch (DataIntegrityViolationException e) {
 //            System.out.print("There is no customer with that id");
         } catch (EmptyResultDataAccessException e){
@@ -37,10 +36,10 @@ public class AccountService {
 //            System.out.print("There is no customer with that id");
         }
         List accountList = accountRepository.getAccountColumn();
-        if (accountList.contains(accountNr)) {
+        if (accountList.contains(accounts.getAccountNr())) {
             throw new ApplicationException("That account number already exists");
         } else {
-            accountRepository.createAccount(accountNr, requestCustomerId);
+            accountRepository.createAccount(accounts);
         }
 //        else if (idList.contains(requestCustomerId)) {
 //            accountRepository.createAccount(accountNr, requestCustomerId);
