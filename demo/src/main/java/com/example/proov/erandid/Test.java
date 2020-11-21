@@ -1,8 +1,12 @@
 package com.example.proov.erandid;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @RestController
 public class Test {
@@ -12,7 +16,12 @@ public class Test {
     }
 
     @GetMapping("exception_test")
-    public int exceptionTest(@RequestParam(value = "i", required = false) Integer i){
+    public int exceptionTest(
+//            @RequestParam(value = "i", required = false) Integer i
+            Principal principal, @RequestParam(value = "i", required = false) Integer i){   //see erand on selleks...
+            UserDetails userDetails= (UserDetails) SecurityContextHolder.       //...et kasutaja ei saaks sisse...
+                    getContext().getAuthentication().getPrincipal();        //...ükskõik mis kasutajanimega
+            System.out.println(principal.getName());
         return fib(i);
     }
 

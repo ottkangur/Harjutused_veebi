@@ -15,7 +15,4 @@ public class HistoryService {
     @Autowired
     private HistoryRepository historyRepository;
 
-//    public void action(){
-//        acc
-//    }
 }

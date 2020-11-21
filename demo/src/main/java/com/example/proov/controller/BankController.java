@@ -2,6 +2,7 @@ package com.example.proov.controller;
 
 import com.example.proov.classesWithFields.Accounts;
 import com.example.proov.classesWithFields.Customer;
+import com.example.proov.classesWithFields.History;
 import com.example.proov.classesWithFields.User;
 import com.example.proov.repo.AccountRepository;
 import com.example.proov.repo2.CustomerRepository2;
@@ -78,9 +79,10 @@ public class BankController {
 
     //depositMoney (requestNr, requestAmount) SQL
     @PutMapping("account/deposit")
-    public void depositMoneySQL(@RequestParam("requestNr") String accountNr,
+    public BigDecimal depositMoneySQL(@RequestParam("requestNr") String accountNr,
                                 @RequestParam("requestAmount") BigDecimal amount) {
         accountService.depositMoneySQL(accountNr, amount);
+        return accountRepository.getBalance(accountNr);
     }
 
 //    @PutMapping("account/deposit/id")
@@ -91,17 +93,19 @@ public class BankController {
 
     //withrawMoney (requestNr, requestAmount) SQL
     @PutMapping("account/withdraw")
-    public void withdrawMoneySQL(@RequestParam("requestNr") String accountNr,
+    public BigDecimal withdrawMoneySQL(@RequestParam("requestNr") String accountNr,
                                  @RequestParam("requestAmount") BigDecimal amount) {
         accountService.withdrawMoneySQL(accountNr, amount);
+        return accountRepository.getBalance(accountNr);
     }
 
     //transferMoney (fromAccount, toAccount, requestAmount) SQL
     @PutMapping("account/transfer")
-    public void transferMoneySQL(@RequestParam("fromNr") String from,
+    public BigDecimal transferMoneySQL(@RequestParam("fromNr") String from,
                                  @RequestParam("requestAmount") BigDecimal amount,
                                  @RequestParam("toNr") String to) {
         accountService.transferMoneySQL(from, to, amount);
+        return accountRepository.getBalance(from);
     }
 
     //tagastab kõik account tabeli sisu
@@ -157,6 +161,12 @@ public class BankController {
     @GetMapping("askName")
     public String askName(@RequestParam("id") int id) {
         return customerService.selectRow(id).getName();
+    }
+
+    //returns history of one client by customer id
+    @GetMapping("history")
+    public History getHistory(@RequestParam("id") int id){
+        return accountService.getHistory(id);
     }
 
 //    @GetMapping("askAccount")

@@ -12,6 +12,7 @@ public class AccountsRowMapper implements RowMapper<Accounts> {
         Accounts account = new Accounts();
         account.setAccountNr(resultSet.getString("account_nr"));
         account.setBalance(resultSet.getBigDecimal("balance"));
+        account.setCustomerId(resultSet.getInt("customer_id"));
         return account;
     }
 }

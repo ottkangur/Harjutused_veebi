@@ -1,6 +1,7 @@
 package com.example.proov.service;
 
 import com.example.proov.classesWithFields.Accounts;
+import com.example.proov.classesWithFields.History;
 import com.example.proov.erandid.ApplicationException;
 import com.example.proov.repo.AccountRepository;
 import com.example.proov.repo.CustomerRepository;
@@ -33,7 +34,6 @@ public class AccountService {
 //            System.out.print("There is no customer with that id");
         } catch (EmptyResultDataAccessException e){
             throw new ApplicationException("There is no customer with that id");
-//            System.out.print("There is no customer with that id");
         }
         List accountList = accountRepository.getAccountColumn();
         if (accountList.contains(accounts.getAccountNr())) {
@@ -118,6 +118,10 @@ public class AccountService {
         } else {
             throw new ApplicationException("Üht või mõlemat kontot pole olemas");
         }
+    }
+
+    public History getHistory(int id){
+        return historyRepository.getHistory(id);
     }
 
 //    public List<Accounts> selectmultipleacc() {

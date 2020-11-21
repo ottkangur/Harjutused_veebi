@@ -1,5 +1,7 @@
 package com.example.proov.repo;
 
+import com.example.proov.classesWithFields.History;
+import com.example.proov.rowmappers.HistoryRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,18 +15,42 @@ public class HistoryRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public void createLog(int accountId,
+    public void createTransferLog(int customerId,
                           String accountNr,
                           BigDecimal amount,
-                          BigDecimal balance) {
-        String sql = "INSERT INTO history (customer_id, account_nr,  amount, balance)" +   //'+' tekib ise Enteriga
-                "VALUES (:x1, :x2, :x3, :x4)";                //koolon ütleb, et see on muutuja ja paneb ise jutumärgid
+                          BigDecimal balance,
+                          String partneraccountNr) {
+        String sql = "INSERT INTO history (customer_id, account_nr,  amount, partner_account_nr, balance)" +   //'+' tekib ise Enteriga
+                "VALUES (:x1, :x2, :x3, :x4, :x5)";                //koolon ütleb, et see on muutuja ja paneb ise jutumärgid
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("x1", accountId);
+        paramMap.put("x1", customerId);
         paramMap.put("x2", accountNr);
         paramMap.put("x3", amount);
-        paramMap.put("x4", balance);
+        paramMap.put("x4", partneraccountNr);
+        paramMap.put("x5", balance);
         namedParameterJdbcTemplate.update(sql, paramMap);
+    }
+
+    public void createLog(int customerId,
+                          String accountNr,
+                          BigDecimal amount,
+                          BigDecimal balance){
+        String sql = "INSERT INTO history (customer_id, account_nr,  amount, partner_account_nr, balance)" +   //'+' tekib ise Enteriga
+                "VALUES (:x1, :x2, :x3, :x4, :x5)";                //koolon ütleb, et see on muutuja ja paneb ise jutumärgid
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("x1", customerId);
+        paramMap.put("x2", accountNr);
+        paramMap.put("x3", amount);
+        paramMap.put("x5", balance);
+        namedParameterJdbcTemplate.update(sql, paramMap);
+    }
+
+    public History getHistory(int id){
+        String sql = "SELECT * FROM history WHERE customer_id= :id";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        History history = namedParameterJdbcTemplate.queryForObject(sql, paramMap, new HistoryRowMapper());
+        return history;
     }
 
 //    public void createLog(int accountId,
