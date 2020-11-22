@@ -13,10 +13,11 @@ public class HistoryRowMapper implements RowMapper<History> {
     @Override
     public History mapRow(ResultSet resultSet, int i) throws SQLException {
         History history = new History();
+        history.setCustomerId(resultSet.getInt("customer_id"));
         history.setAccountNr(resultSet.getString("account_nr"));
         history.setAmount(resultSet.getBigDecimal("amount"));
+        history.setTypeofaction(resultSet.getString("action_type"));
         history.setBalance(resultSet.getBigDecimal("balance"));
-        history.setCustomerId(resultSet.getInt("customer_id"));
         history.setPartneraccountNr(resultSet.getString("partner_account_nr"));
         return history;
     }

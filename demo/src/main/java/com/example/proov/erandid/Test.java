@@ -12,21 +12,21 @@ import java.security.Principal;
 public class Test {
 
     public static void main(String[] args) {
-
+//        System.out.println(fib(4));
     }
 
     @GetMapping("exception_test")
     public int exceptionTest(
 //            @RequestParam(value = "i", required = false) Integer i
             Principal principal, @RequestParam(value = "i", required = false) Integer i){   //see erand on selleks...
-            UserDetails userDetails= (UserDetails) SecurityContextHolder.       //...et kasutaja ei saaks sisse...
-                    getContext().getAuthentication().getPrincipal();        //...ükskõik mis kasutajanimega
-            System.out.println(principal.getName());
+//            UserDetails userDetails= (UserDetails) SecurityContextHolder.       //...et kasutaja ei saaks sisse...
+//                    getContext().getAuthentication().getPrincipal();        //...ükskõik mis kasutajanimega
+//            System.out.println(principal.getName());
         return fib(i);
     }
 
     public static int fib(int n) {
-//        if(n == null){
+//        if(n != ){
 //            throw new ApplicationException("i peab olema number");
 //        }
         if (n < 1){

@@ -14,7 +14,7 @@
     let myButton = document.getElementById("buttonid");
     myButton.onclick = function () {
         let myInput = document.getElementById("inputid").value;
-         // alert(myInput)
+        // alert(myInput)
         let myTable = document.getElementById("tableid");
         let rowElement = document.createElement("tr");
         let cellElement = document.createElement("td");
@@ -28,7 +28,7 @@
             rowElement.append(cellElement);
             myTable.append(rowElement);
         } else if (myInput == 2) {
-            rowElement.append(cellElement,cellElement2);
+            rowElement.append(cellElement, cellElement2);
             myTable.append(rowElement);
         } else {
             rowElement.append(cellElement, cellElement2)
@@ -48,23 +48,34 @@
 <br><br><br>
 
 <!---->
-
+<br>
+<div>Customer ID:</div>
+<p id="r1"></p>
+<p>Name: </p>
+<p id="r2"></p>
+<p>Address: </p>
+<p id="r3"></p>
+<br>
+<table id="row" border="1"></table>
+<br>
 <table id="myTable" border="1">
     <tr>
         <th colspan="3">Customer</th>
     </tr>
 </table>
+
 <script>
     //fetch ja promise
+    //1st fetch
     fetch("http://localhost:8080/selectmultiplecustomers").then(
-        function(result){    //kui a saab tagastuse (result), siis tehakse midagi, antud juhul function(result)
-            console.log(result)  //prindib F12 konsooli
+        function (result) {    //kui a saab tagastuse (result), siis tehakse midagi, antud juhul function(result)
+            console.log(result)  //prindib F12 konsooli; otseselt pole vajalik
             return result.json();
         }
-    ).then(function(result){
+    ).then(function (result) {
             console.log(result)  //prindib F12 konsooli
             let table = document.getElementById("myTable")
-            for(let i = 0; i < result.length; i++){
+            for (let i = 0; i < result.length; i++) {
                 let row = document.createElement("tr");
 
                 let cell = document.createElement("td");
@@ -83,6 +94,34 @@
             }
         }
     )
+
+    //2nd fetch
+    let rowButton = document.getElementById("buttonid");
+    rowButton.onclick = function () {
+        let id = document.getElementById("inputid").value;
+        fetch("http://localhost:8080/selectrow/" + id)
+            .then(function (result) {
+                return result.json();
+        })
+            .then(function (result) {
+            console.log(result);
+            document.getElementById("r1").innerText = result.id;
+            document.getElementById("r2").innerText = result.name;
+            document.getElementById("r3").innerText = result.address;
+            let table = document.getElementById("row");
+            let row = document.createElement("tr");
+            let cell1 = document.createElement("td");
+                cell1.innertext = result.id;
+            row.append(cell1);
+            let cell2 = document.createElement("td");
+                cell2.innerText = result.name;
+            row.append(cell2);
+            let cell3 = document.createElement("td")
+                cell3.innerText = result.address;
+            row.append(cell3);
+            table.append(row);
+        })
+    }
 </script>
 
 <!---->

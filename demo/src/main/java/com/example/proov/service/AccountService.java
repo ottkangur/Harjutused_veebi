@@ -52,9 +52,8 @@ public class AccountService {
         if (accountList.contains(accountNr)) {
             accountRepository.updatedBalance(accountNr,
                     accountRepository.getBalance(accountNr).add(amount));
-            historyRepository.createLog(accountRepository.getId(accountNr),
-                    accountNr,
-                    amount,
+            historyRepository.createLog(accountRepository.getId(accountNr), accountNr,
+                    amount, "deposit",
                     accountRepository.getBalance(accountNr).add(amount));
         } else {
             throw new ApplicationException("Seda kontot pole olemas");
@@ -80,8 +79,7 @@ public class AccountService {
         accountRepository.updatedBalance(accountRepository.getAccount(id).getAccountNr(),
                 accountRepository.getAccount(id).getBalance().add(amount));
         historyRepository.createLog(accountRepository.getId(accountRepository.getAccount(id).getAccountNr()),
-                accountRepository.getAccount(id).getAccountNr(),
-                amount,
+                accountRepository.getAccount(id).getAccountNr(), amount, "deposit",
                 accountRepository.getAccount(id).getBalance().add(amount));
     }
 
@@ -91,36 +89,38 @@ public class AccountService {
             if (accountRepository.getBalance(accountNr).compareTo(amount) < 0) {
                 throw new ApplicationException("Kontol pole piisavalt raha!");
             } else {
-                BigDecimal newBalance = accountRepository.getBalance(accountNr).subtract(amount);
-                accountRepository.updatedBalance(accountNr, newBalance);
-                //BigDecimal newAmount = amount.multiply(createNeg());
-                historyRepository.createLog(accountRepository.getId(accountNr), accountNr, amount.multiply(BigDecimal.valueOf(-1)), newBalance);
+                accountRepository.updatedBalance(accountNr,
+                        accountRepository.getBalance(accountNr).subtract(amount));
+                historyRepository.createLog(accountRepository.getId(accountNr), accountNr,
+                        amount.multiply(BigDecimal.valueOf(-1)), "withdraw",
+                        accountRepository.getBalance(accountNr).subtract(amount));
             }
         } else {
             throw new ApplicationException("Seda kontot pole olemas");
         }
     }
 
-    public void transferMoneySQL(String from,
-                                 String to,
-                                 BigDecimal amount) {
-        if (accountRepository.getAccountColumn().contains(from) && accountRepository.getAccountColumn().contains(to)) {
+    public void transferMoneySQL(String from, String to, BigDecimal amount) {
+        if (accountRepository.getAccountColumn().contains(from)
+                && accountRepository.getAccountColumn().contains(to)) {
             if (accountRepository.getBalance(from).compareTo(amount) < 0) {
                 throw new ApplicationException("Kontol pole piisavalt raha!");
             } else {
-                BigDecimal fromBalance = accountRepository.getBalance(from).subtract(amount);
-                BigDecimal toBalance = accountRepository.getBalance(to).add(amount);
-                accountRepository.updatedBalance(from, fromBalance);
-                accountRepository.updatedBalance(to, toBalance);
-                historyRepository.createLog(accountRepository.getId(to), to, amount, toBalance);
-                historyRepository.createLog(accountRepository.getId(from), from, amount.multiply(BigDecimal.valueOf(-1)), fromBalance);
+                accountRepository.updatedBalance(from, accountRepository.getBalance(from).subtract(amount));
+                accountRepository.updatedBalance(to, accountRepository.getBalance(to).add(amount));
+                historyRepository.createTransferLog(accountRepository.getId(from), from,
+                        amount.multiply(BigDecimal.valueOf(-1)), "transfer",
+                        accountRepository.getBalance(from).subtract(amount), to);
+                historyRepository.createTransferLog(accountRepository.getId(to), to,
+                        amount, "transfer",
+                        accountRepository.getBalance(to).add(amount), from);
             }
         } else {
             throw new ApplicationException("Üht või mõlemat kontot pole olemas");
         }
     }
 
-    public History getHistory(int id){
+    public List<History> getHistory(int id){
         return historyRepository.getHistory(id);
     }
 

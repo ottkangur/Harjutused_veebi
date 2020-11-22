@@ -152,8 +152,8 @@ public class BankController {
     }
 
     //tagastab ühe Customer rea id järgi
-    @GetMapping("selectrow")
-    public Customer selectCustomerRow(@RequestParam("id") int id) { //Customer näitab, mis id järgi
+    @GetMapping("selectrow/{id}")
+    public Customer selectCustomerRow(@PathVariable("id") int id) { //Customer näitab, mis id järgi
         return customerService.selectRow(id);
     }
 
@@ -164,8 +164,8 @@ public class BankController {
     }
 
     //returns history of one client by customer id
-    @GetMapping("history")
-    public History getHistory(@RequestParam("id") int id){
+    @GetMapping("history/{id}")
+    public List<History> getHistory(@PathVariable("id") int id){
         return accountService.getHistory(id);
     }
 

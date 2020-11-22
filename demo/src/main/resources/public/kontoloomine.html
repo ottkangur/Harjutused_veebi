@@ -60,6 +60,7 @@
 <button id="see">press me</button>
 <table id = "myTable"></table>
 <br>
+
     <script>
         // let element = document.getElementById("siia");
         // element.value = "midagi";
@@ -83,9 +84,10 @@
 
 <!---->
 
-<button id="buttonid">Create table</button>
-<table id="tableid"></table>
+<button id="buttonid">Create table</button><br>
 <input id="inputid" type="number">
+<table id="tableid"></table>
+<p id="end"></p>
 <script>
     let myButton = document.getElementById("buttonid")
     myButton.onclick = function (){
@@ -99,16 +101,17 @@
             rowElement.append(cellElement)
         }
         myTable.append(rowElement)
+        document.getElementById("end").innerText = document.getElementById("inputid").value*100;
     }
 </script>
 <br>
 
 <!---->
-
-<button id="multiplyid">Multiply</button>
-<table id="resultid"></table>
+<br>
+<button id="multiplyid">Multiply</button><br>
 <input id="iid" type="number">
 <input id="jid">
+<table id="resultid"></table>
 <script>
     let myButton2 = document.getElementById("multiplyid");
     myButton2.onclick = function (){
